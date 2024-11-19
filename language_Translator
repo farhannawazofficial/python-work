@@ -1,0 +1,26 @@
+import requests
+
+def translate_text(text, target_language):
+    """Translates text using the Google Translate API."""
+
+    api_key = "YOUR_API_KEY"  # Replace with your actual API key
+    base_url = "https://translation.googleapis.com/language/translate/v2"
+    params = {
+        "q": text,
+        "target": target_language,
+        "key": api_key
+    }
+
+    response = requests.get(base_url, params=params)
+    response.raise_for_status()  # Raise an exception for non-200 status codes
+
+    data = response.json()
+    translated_text = data["data"]["translations"][0]["translatedText"]
+
+    return translated_text
+
+# Example usage:
+text_to_translate = "Hello, world!"
+target_language = "es"  # Spanish
+translated_text = translate_text(text_to_translate, target_language)
+print(translated_text)  # Output: ¡Hola Mundo!
